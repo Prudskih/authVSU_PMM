@@ -1,22 +1,10 @@
 # config.py
 from cryptography.hazmat.primitives.asymmetric import rsa
 from cryptography.hazmat.primitives import serialization
-from cryptography.hazmat.primitives.ciphers.aead import AESGCM
-from dotenv import load_dotenv
+
 import os
 from pathlib import Path
 
-# Загружаем переменные окружения из .env файла
-try:
-    load_dotenv(encoding='utf-8')
-except UnicodeDecodeError:
-    # Если .env файл не в UTF-8, пытаемся загрузить с другой кодировкой
-    env_path = Path(__file__).parent / '.env'
-    if env_path.exists():
-        print(f"⚠️  Внимание: файл .env имеет неправильную кодировку!")
-        print(f"   Пересохраните .env файл в кодировке UTF-8 (без BOM)")
-        print(f"   Или удалите файл для использования значений по умолчанию")
-    # Продолжаем работу без .env файла
 
 # Путь к директории с ключами
 KEYS_DIR = Path(__file__).parent / "keys"
