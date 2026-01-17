@@ -7,7 +7,16 @@ import os
 from pathlib import Path
 
 # Загружаем переменные окружения из .env файла
-load_dotenv()
+try:
+    load_dotenv(encoding='utf-8')
+except UnicodeDecodeError:
+    # Если .env файл не в UTF-8, пытаемся загрузить с другой кодировкой
+    env_path = Path(__file__).parent / '.env'
+    if env_path.exists():
+        print(f"⚠️  Внимание: файл .env имеет неправильную кодировку!")
+        print(f"   Пересохраните .env файл в кодировке UTF-8 (без BOM)")
+        print(f"   Или удалите файл для использования значений по умолчанию")
+    # Продолжаем работу без .env файла
 
 # Путь к директории с ключами
 KEYS_DIR = Path(__file__).parent / "keys"
@@ -73,4 +82,7 @@ AES_KEY = get_or_create_aes_key()
 RSA_PRIVATE_KEY, RSA_PUBLIC_KEY = get_or_create_rsa_keys()
 
 # Flask секретный ключ из переменной окружения
-FLASK_SECRET_KEY = os.getenv('FLASK_SECRET_KEY', 'change-this-in-production-secret-key')
+# Если .env файл не читается или ключа нет - используем fallback
+FLASK_SECRET_KEY = os.getenv('FLASK_SECRET_KEY')
+if not FLASK_SECRET_KEY:
+    FLASK_SECRET_KEY = 'change-this-in-production-secret-key-dev-only'

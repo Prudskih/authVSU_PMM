@@ -32,7 +32,7 @@ pip install -r requirements.txt
 Создайте файл `.env` на основе `.env.example`:
 
 ```bash
-cp .env.example .env
+cp .env .env
 ```
 
 Отредактируйте `.env` и установите свои значения:
