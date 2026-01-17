@@ -11,13 +11,12 @@ import os
 app = Flask(__name__)
 app.secret_key = FLASK_SECRET_KEY
 
-# Режим отладки из переменной окружения
+# Режим отладки
 DEBUG = os.getenv('FLASK_DEBUG', 'False').lower() == 'true'
 
 # Добавляем фильтр для форматирования времени в шаблонах
 @app.template_filter('datetimeformat')
 def datetimeformat(value, format='%d.%m.%Y %H:%M'):
-    """Форматирует timestamp в читаемую дату"""
     if value:
         return datetime.fromtimestamp(value).strftime(format)
     return ''
@@ -163,7 +162,7 @@ def upload_pdf():
         flash("Файл не выбран", "error")
         return redirect(url_for('files'))
     if not file.filename.lower().endswith('.pdf'):
-        flash("Только PDF!", "error")
+        flash("Только PDF формат", "error")
         return redirect(url_for('files'))
 
     try:
