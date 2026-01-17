@@ -27,22 +27,7 @@ source venv/bin/activate
 pip install -r requirements.txt
 ```
 
-### 3. Настройка переменных окружения
-
-Создайте файл `.env` на основе `.env.example`:
-
-```bash
-cp .env .env
-```
-
-Отредактируйте `.env` и установите свои значения:
-
-```
-FLASK_SECRET_KEY=your-super-secret-key-change-this-in-production-min-32-chars
-FLASK_DEBUG=False
-```
-
-### 4. Запуск приложения
+### 3. Запуск приложения
 
 ```bash
 python app.py
