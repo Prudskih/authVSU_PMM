@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+{% block title %}Админ-панель{% endblock %}
+{% block content %}
+<h2>Управление пользователями</h2>
+
+<h3>Список пользователей:</h3>
+<ul>
+{% for u in users %}
+    <li>{{ u.username }} ({{ u.role }})
+        {% if u.username != current_user %}
+        <form method="POST" action="/admin/delete" style="display:inline;">
+            <input type="hidden" name="username" value="{{ u.username }}">
+            <button type="submit" onclick="return confirm('Удалить?')">Удалить</button>
+        </form>
+        {% endif %}
+    </li>
+{% endfor %}
+</ul>
+
+<h3>Добавить пользователя:</h3>
+<form method="POST" action="/admin/create">
+    <input type="text" name="username" placeholder="Имя" required>
+    <input type="password" name="password" placeholder="Пароль" required>
+    <select name="role">
+        <option value="user">Пользователь</option>
+        <option value="admin">Администратор</option>
+    </select>
+    <button type="submit">Добавить</button>
+</form>
+
+<br>
+<a href="/dashboard">← Назад</a>
+{% endblock %}

@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Simple Auth System</title>
+    <style>
+        body { font-family: Arial; margin: 40px; }
+        .error { color: red; }
+        .success { color: green; }
+        form { margin: 10px 0; }
+        input, button { padding: 6px; margin: 4px; }
+    </style>
+</head>
+<body>
+    {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+            {% for category, message in messages %}
+                <div class="{{ 'error' if category == 'error' else 'success' }}">{{ message }}</div>
+            {% endfor %}
+        {% endif %}
+    {% endwith %}
+
+    <h1>{% block title %}{% endblock %}</h1>
+    {% block content %}{% endblock %}
+</body>
+</html>

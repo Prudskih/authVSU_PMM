@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+{% block title %}Личный кабинет{% endblock %}
+{% block content %}
+<p>Привет, {{ current_user }}! Ваша роль: {{ role }}</p>
+
+<a href="/change_password">Сменить пароль</a> |
+<a href="/logout">Выйти</a>
+
+<br><br>
+<a href="/files">Мои PDF-файлы</a>
+
+{% if role == "admin" %}
+<br><br>
+<a href="/admin">Админ-панель</a>
+{% endif %}
+{% endblock %}
