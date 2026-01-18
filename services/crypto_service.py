@@ -13,7 +13,7 @@ class CryptoService:
         self.rsa_public = RSA_PUBLIC_KEY
 
     def encrypt_symmetric(self, data: bytes) -> bytes:
-        """AES-GCM шифрование (автоматически генерирует IV)"""
+        """AES-GCM шифрование"""
         iv = os.urandom(12)
         cipher = Cipher(algorithms.AES(self.aes_key), modes.GCM(iv))
         encryptor = cipher.encryptor()

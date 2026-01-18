@@ -69,13 +69,12 @@ AES_KEY = get_or_create_aes_key()
 # Асимметричные ключи RSA (для ЭП)
 RSA_PRIVATE_KEY, RSA_PUBLIC_KEY = get_or_create_rsa_keys()
 
-# Flask секретный ключ из переменной окружения
-# Если .env файл не читается или ключа нет - используем fallback
+#env  не используем
 FLASK_SECRET_KEY = os.getenv('FLASK_SECRET_KEY')
 if not FLASK_SECRET_KEY:
     FLASK_SECRET_KEY = 'change-this-in-production-secret-key-dev-only'
 
- # Локальная "БД" пользователей (JSON)
+ # Локальное хранилище
 USERS_DB_FILE = Path(__file__).parent / "data" / "users.json"
 USERS_DB_FILE.parent.mkdir(exist_ok=True)
 

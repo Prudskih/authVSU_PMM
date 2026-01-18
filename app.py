@@ -157,7 +157,6 @@ def upload_pdf():
     if 'username' not in session:
         return redirect(url_for('login'))
 
-    # Теперь загружать могут и admin, и user
     if 'pdf' not in request.files:
         flash("Файл не выбран", "error")
         return redirect(url_for('files'))
