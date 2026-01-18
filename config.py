@@ -74,3 +74,8 @@ RSA_PRIVATE_KEY, RSA_PUBLIC_KEY = get_or_create_rsa_keys()
 FLASK_SECRET_KEY = os.getenv('FLASK_SECRET_KEY')
 if not FLASK_SECRET_KEY:
     FLASK_SECRET_KEY = 'change-this-in-production-secret-key-dev-only'
+
+ # Локальная "БД" пользователей (JSON)
+USERS_DB_FILE = Path(__file__).parent / "data" / "users.json"
+USERS_DB_FILE.parent.mkdir(exist_ok=True)
+

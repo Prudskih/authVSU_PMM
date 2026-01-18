@@ -1,66 +1,90 @@
 {% extends "base.html" %}
-{% block title %}Мои PDF-файлы{% endblock %}
+
+{% block title %}PDF-файлы{% endblock %}
+
 {% block content %}
-{% if role == "admin" %}
+
 <h2>Загрузить PDF</h2>
-<form method="POST" enctype="multipart/form-data" action="/upload_pdf">
+<form method="POST" enctype="multipart/form-data" action="{{ url_for('upload_pdf') }}">
     <input type="file" name="pdf" accept=".pdf" required>
     <button type="submit">Загрузить</button>
 </form>
 
 <hr>
-{% endif %}
 
-<h2>{% if role == "admin" %}Мои загруженные файлы{% else %}Доступные PDF-файлы{% endif %}</h2>
+<h2>
+    {% if role == "admin" %}
+        Все загруженные файлы
+    {% else %}
+        Мои файлы
+    {% endif %}
+</h2>
+
 {% if files %}
-    <table style="border-collapse: collapse; width: 100%; margin-top: 20px;">
-        <thead>
-            <tr style="background-color: #f0f0f0;">
-                <th style="border: 1px solid #ddd; padding: 10px; text-align: left;">Имя файла</th>
-                {% if role == "user" %}
-                <th style="border: 1px solid #ddd; padding: 10px; text-align: left;">Загрузил</th>
+<table style="border-collapse: collapse; width: 100%; margin-top: 20px;">
+    <thead>
+        <tr style="background-color: #f0f0f0;">
+            <th style="border: 1px solid #ddd; padding: 10px;">Имя файла</th>
+
+            {% if role == "admin" %}
+            <th style="border: 1px solid #ddd; padding: 10px;">Владелец</th>
+            {% endif %}
+
+            <th style="border: 1px solid #ddd; padding: 10px;">Размер</th>
+            <th style="border: 1px solid #ddd; padding: 10px;">Дата загрузки</th>
+            <th style="border: 1px solid #ddd; padding: 10px;">Действия</th>
+        </tr>
+    </thead>
+
+    <tbody>
+        {% for file in files %}
+        <tr>
+            <td style="border: 1px solid #ddd; padding: 10px;">
+                {{ file.filename }}
+            </td>
+
+            {% if role == "admin" %}
+            <td style="border: 1px solid #ddd; padding: 10px;">
+                {{ file.owner }}
+            </td>
+            {% endif %}
+
+            <td style="border: 1px solid #ddd; padding: 10px;">
+                {% if file.size < 1024 %}
+                    {{ file.size }} Б
+                {% elif file.size < 1048576 %}
+                    {{ "%.2f"|format(file.size / 1024) }} КБ
+                {% else %}
+                    {{ "%.2f"|format(file.size / 1048576) }} МБ
                 {% endif %}
-                <th style="border: 1px solid #ddd; padding: 10px; text-align: left;">Размер</th>
-                <th style="border: 1px solid #ddd; padding: 10px; text-align: left;">Дата загрузки</th>
-                <th style="border: 1px solid #ddd; padding: 10px; text-align: left;">Действия</th>
-            </tr>
-        </thead>
-        <tbody>
-            {% for file in files %}
-            <tr>
-                <td style="border: 1px solid #ddd; padding: 10px;">{{ file.filename }}</td>
-                {% if role == "user" %}
-                <td style="border: 1px solid #ddd; padding: 10px;">
-                    {% if file.is_owner %}
-                        <span style="color: #666;">Вы</span>
-                    {% else %}
-                        <span style="color: #0066cc;">{{ file.owner }}</span>
-                    {% endif %}
-                </td>
-                {% endif %}
-                <td style="border: 1px solid #ddd; padding: 10px;">
-                    {% if file.size < 1024 %}
-                        {{ file.size }} Б
-                    {% elif file.size < 1048576 %}
-                        {{ "%.2f"|format(file.size / 1024) }} КБ
-                    {% else %}
-                        {{ "%.2f"|format(file.size / 1048576) }} МБ
-                    {% endif %}
-                </td>
-                <td style="border: 1px solid #ddd; padding: 10px;">
-                    {{ file.modified|datetimeformat('%d.%m.%Y %H:%M') }}
-                </td>
-                <td style="border: 1px solid #ddd; padding: 10px;">
-                    <a href="/view_pdf/{{ file.filename }}" target="_blank" style="color: #0066cc; text-decoration: none;">Просмотреть</a>
-                </td>
-            </tr>
-            {% endfor %}
-        </tbody>
-    </table>
+            </td>
+
+            <td style="border: 1px solid #ddd; padding: 10px;">
+                {{ file.modified | datetimeformat('%d.%m.%Y %H:%M') }}
+            </td>
+
+            <td style="border: 1px solid #ddd; padding: 10px;">
+                <a href="{{ url_for('view_pdf', safe_name=file.safe_name) }}"
+                   target="_blank"
+                   style="color: #0066cc; text-decoration: none;">
+                    Просмотреть
+                </a>
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
 {% else %}
-    <p style="color: #666; margin-top: 20px;">У вас пока нет загруженных файлов.</p>
+<p style="color: #666; margin-top: 20px;">
+    {% if role == "admin" %}
+        Файлы пока не загружены.
+    {% else %}
+        У вас пока нет загруженных файлов.
+    {% endif %}
+</p>
 {% endif %}
 
 <br>
-<a href="/dashboard">← Назад в панель управления</a>
+<a href="{{ url_for('dashboard') }}">← Назад в панель управления</a>
+
 {% endblock %}

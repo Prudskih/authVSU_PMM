@@ -1,0 +1,26 @@
+{
+  "admin": {
+    "role": "admin",
+    "password_hash_b64": "JDJiJDEyJC4yNDBqQk03WVEzQXF6M3Z6elRFRmVtbE9KN205dnJ0djBnNFZLbWszZHZzS1k4dFhpOUlT"
+  },
+  "user1": {
+    "role": "user",
+    "password_hash_b64": "JDJiJDEyJHZOR1dGT0ZtaDRFUzJWQ25LTEtBZy5lWGsuWUd5R20xWk5KOGR6cFRWZHhJTTJDam5sVExx"
+  },
+  "T.Pisareva": {
+    "role": "user",
+    "password_hash_b64": "JDJiJDEyJE9rSVFVYU41MFp4dGZWS3paaVl6WE9EdG5hOGlMUXV2alRLcEZ1dTNxVXhWVFpKZ01ZdmdH"
+  },
+  "V.Okshina": {
+    "role": "user",
+    "password_hash_b64": "JDJiJDEyJHdOT3NISjVUc0pCbncxYkZLR3Z2Li4yb2R5UVZ2NHNNZGt4MXpHTVdYZ0prNU5xOVlxcnBP"
+  },
+  "I.Kislova": {
+    "role": "user",
+    "password_hash_b64": "JDJiJDEyJC9NSWwyakc1VUp5MmNPc29zaldaOS5ubExmMzMvTzNVWXZ5YnhzUXJVdUZTV3N3RGEzUS9L"
+  },
+  "D.Prudskih": {
+    "role": "user",
+    "password_hash_b64": "JDJiJDEyJDRTb3JkRlJUa292VkYzQXBra1Y3cGVUQXE1VURpL0JsWFhvVzFjeEwvdkZXVGVvRmlqaUFp"
+  }
+}
